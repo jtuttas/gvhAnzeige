@@ -16,8 +16,13 @@ function refresh() {
                     var min = Math.round(dif / (1000 * 60));
 
                     $("#content").append('<div class="row">');
-                    $("#content").append('<div class="col-xs-3 col-sm-3 col-md-3">' + element.type + " " + element.line + '</div>');
-                    $("#content").append('<div class="col-xs-7 col-sm-7 col-md-7">' + element.destination + '</div>');
+                    if (element.type=="Bus") {
+                        $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="bus.png">' + element.type + " " + element.line + '</div>');
+                    }
+                    else {
+                        $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
+                    }
+                    $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
                     $("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute">' + min + ' min</div>');
                     $("#content").append('</div>');
 
