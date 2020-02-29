@@ -19,6 +19,11 @@ node Server.js [station] [Port]
 ## Docker Container
 Es existiert auch ein Dockercontainer. Dieser kann wie folgt gestartet werden:
 ```
-docker run -p 8999:8999 -e STATION=25001795  gvh:latest
+docker run -p 8999:8999 service.joerg-tuttas.de:5555/root/gvhanzeige
+
+```
+Als Umgebungsvariable kann STATION auf einen anderen Wert gesetzt werden.
+```
+docker run -p 8999:8999 -e STATION=25001795  service.joerg-tuttas.de:5555/root/gvhanzeige
 ```
 
