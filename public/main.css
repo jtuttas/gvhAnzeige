@@ -1,0 +1,27 @@
+body {
+    background-color: black;
+    
+}
+
+.minuten {
+    text-align: right;
+}
+
+
+
+#content {
+    color: coral;
+    font-size: 2.5vw;
+    padding: 0;
+    width: 99%;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color:azure;
+    color:cornflowerblue;
+    text-align: right;
+    padding: 1em;
+  }
