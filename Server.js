@@ -56,21 +56,29 @@ app.use(express_1.default.static('public'));
 var server = http.createServer(app);
 //initialize the WebSocket server instance
 var wss = new WebSocket.Server({ server: server });
-var dep;
+var dep = new Array();
 wss.on('connection', function (ws) {
     //send immediatly a feedback to the incoming connection    
-    ws.send(JSON.stringify(_this.dep));
+    ws.send(JSON.stringify(dep));
 });
 //start our server
-server.listen(process.env.PORT || 8999, function () {
-    console.log("Server started on port 8999 :)");
+console.log("usage: node Server.js [Station {default=25001811}] [Port {default=8999}");
+var port = 8999;
+var station = 25001811;
+if (process.argv[3]) {
+    port = +process.argv[3];
+}
+if (process.argv[2]) {
+    station = +process.argv[2];
+}
+server.listen(process.env.PORT || port, function () {
+    console.log("Server started on port " + port + " for station " + station);
 });
 function delay(ms) {
     return new Promise(function (resolve) { return setTimeout(resolve, ms); });
 }
 (function () { return __awaiter(_this, void 0, void 0, function () {
     var s;
-    var _this = this;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -78,8 +86,9 @@ function delay(ms) {
                 // Do something before delay
                 console.log('..');
                 s = void 0;
-                GVH_1.GVH.getData().then(function (depatures) {
-                    _this.dep = depatures;
+                GVH_1.GVH.getData(station).then(function (depatures) {
+                    console.log('Empfange Daten ..' + JSON.stringify(depatures));
+                    dep = depatures;
                     wss.clients.forEach(function (ws) {
                         ws.send(JSON.stringify(depatures));
                     });
@@ -87,7 +96,7 @@ function delay(ms) {
                         console.log(element.describe());
                     });
                 });
-                return [4 /*yield*/, delay(600000)];
+                return [4 /*yield*/, delay(60000)];
             case 1:
                 _a.sent();
                 return [3 /*break*/, 0];

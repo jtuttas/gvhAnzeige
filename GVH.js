@@ -43,9 +43,9 @@ var Departure_1 = require("./Departure");
 var GVH = /** @class */ (function () {
     function GVH() {
     }
-    GVH.getData = function () {
+    GVH.getData = function (station) {
         return __awaiter(this, void 0, void 0, function () {
-            var date, hh, mm, yyyymmdd, response;
+            var date, hh, mm, yyyymmdd, response, url;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -54,8 +54,10 @@ var GVH = /** @class */ (function () {
                         mm = this.format(date.getMinutes());
                         yyyymmdd = date.getFullYear() + this.format(date.getMonth() + 1) + this.format(date.getDate());
                         response = {};
+                        url = "https://efa107.efa.de/efaws2/default/XML_DM_REQUEST?outputFormat=JSON&sessionID=0&requestID=0&language=de&useRealtime=1&coordOutputFormat=WGS84[DD.ddddd]&locationServerActive=1&mode=direct&dmLineSelectionAll=1&depType=STOPEVENTS&useAllStops=1&command=null&type_dm=stop&name_dm=" + station + "&itdTime=" + hh + mm + "&itdDate=" + yyyymmdd + "&outputEncoding=UTF-8&inputEncoding=UTF-8&mId=efa_www";
+                        console.log("URL:" + url);
                         return [4 /*yield*/, request_promise_1.default({
-                                url: "https://efa107.efa.de/efaws2/default/XML_DM_REQUEST?outputFormat=JSON&sessionID=0&requestID=0&language=de&useRealtime=1&coordOutputFormat=WGS84[DD.ddddd]&locationServerActive=1&mode=direct&dmLineSelectionAll=1&depType=STOPEVENTS&useAllStops=1&command=null&type_dm=stop&name_dm=25001811&itdTime=" + hh + mm + "&itdDate=" + yyyymmdd + "&outputEncoding=UTF-8&inputEncoding=UTF-8&mId=efa_www",
+                                url: url,
                                 method: "GET",
                                 headers: { 'content-type': 'application/json' },
                                 body: {},
@@ -63,11 +65,12 @@ var GVH = /** @class */ (function () {
                             }, function (error, responce, body) {
                             })
                                 .then(function (body) {
-                                console.log("Erzeuge Daten");
+                                console.log("Erzeuge Objekte");
+                                GVH.station = body.dm.input.input;
                                 var da = [];
                                 body.departureList.forEach(function (element) {
                                     if ('realDateTime' in element) {
-                                        var d = new Departure_1.Depatures(element.realDateTime.year, element.realDateTime.month, element.realDateTime.day, element.realDateTime.weekday, element.realDateTime.hour, element.realDateTime.minute, element.servingLine.number, element.servingLine.direction, element.servingLine.name);
+                                        var d = new Departure_1.Depatures(element.realDateTime.year, element.realDateTime.month, element.realDateTime.day, element.realDateTime.weekday, element.realDateTime.hour, element.realDateTime.minute, element.servingLine.number, element.servingLine.direction, element.servingLine.name, GVH.station);
                                         da.push(d);
                                     }
                                 });
@@ -89,6 +92,7 @@ var GVH = /** @class */ (function () {
             return "" + i;
         }
     };
+    GVH.station = "";
     return GVH;
 }());
 exports.GVH = GVH;

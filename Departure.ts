@@ -8,8 +8,9 @@ export class Depatures {
     line: number;
     destination:string;
     type:string;
+    station:string;
 
-    constructor(y: number, m: number, d: number, wd: number, h: number, mi: number,l:number,dest:string,t:string) {
+    constructor(y: number, m: number, d: number, wd: number, h: number, mi: number,l:number,dest:string,t:string,st:string) {
         this.year = y;
         this.month=m;
         this.day=d;
@@ -19,9 +20,10 @@ export class Depatures {
         this.line=l;
         this.destination=dest;
         this.type=t;
+        this.station=st;
     }
 
     public describe():string {
-        return ""+this.type+" "+this.line+" Abfahrt "+this.hour+":"+this.minute+" Richtung:"+this.destination;
+        return ""+this.station+":"+this.type+" "+this.line+" Abfahrt "+this.hour+":"+this.minute+" Richtung:"+this.destination;
     }
 }
