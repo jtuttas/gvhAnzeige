@@ -1,6 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Depatures = /** @class */ (function () {
+    /**
+     * Eine Abfahrzeit
+     * @param y Das Jahr
+     * @param m Der Monat
+     * @param d Der Tag
+     * @param h Die Stunde
+     * @param mi Die Minute
+     * @param ry Echtzeitinformation Year - wenn keine Echtzeit dann 0
+     * @param rm Echtzeitinformation Month - wenn keine Echtzeit dann 0
+     * @param rd Echtzeitinformation Day - wenn keine Echtzeit dann 0
+     * @param rh Echtzeitinformation Hour - wenn keine Echtzeit dann 0
+     * @param rmi Echtzeitinformation Minute - wenn keine Echtzeit dann 0
+     * @param l Liniennummer
+     * @param dest Ziel
+     * @param t Type (Bus / Stadtbahn)
+     * @param st Stationsname in Klartext
+     */
     function Depatures(y, m, d, h, mi, ry, rm, rd, rh, rmi, l, dest, t, st) {
         this.year = y;
         this.month = m;
