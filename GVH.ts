@@ -26,14 +26,37 @@ export class GVH {
                 let da: Depatures[] = [];
                 body.departureList.forEach(element => {
                     
-                    if('realDateTime' in element){
+                    if ('dateTime' in element && 'realDateTime' in element) {
                         let d: Depatures = new Depatures(
+                            element.dateTime.year,
+                            element.dateTime.month,
+                            element.dateTime.day,
+                            element.dateTime.hour,
+                            element.dateTime.minute,
                             element.realDateTime.year,
                             element.realDateTime.month,
                             element.realDateTime.day,
-                            element.realDateTime.weekday,
                             element.realDateTime.hour,
                             element.realDateTime.minute,
+                            element.servingLine.number,
+                            element.servingLine.direction,
+                            element.servingLine.name,
+                            GVH.station
+                            );
+                        da.push(d);
+                    }
+                    else if('dateTime' in element){
+                        let d: Depatures = new Depatures(
+                            element.dateTime.year,
+                            element.dateTime.month,
+                            element.dateTime.day,
+                            element.dateTime.hour,
+                            element.dateTime.minute,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
                             element.servingLine.number,
                             element.servingLine.direction,
                             element.servingLine.name,
