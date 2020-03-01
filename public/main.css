@@ -24,6 +24,11 @@ body {
     vertical-align: middle;
 }
 
+#station {
+    font-size: 4.5vw;
+    text-align: center;
+}
+
 #content {
     color: coral;
     font-size: 2.7vw;
@@ -35,8 +40,8 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color:azure;
+    background-color:white;
     color:cornflowerblue;
     text-align: right;
-    padding: 1em;
+    padding: 0.5em;
   }
