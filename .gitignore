@@ -1,3 +1,5 @@
 node_modules/
-*.js
+./*.js
+client/*.js
+data/*.js
 *.map
