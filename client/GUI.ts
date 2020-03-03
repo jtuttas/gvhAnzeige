@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { Depature } from "../data/Departure";
 import { WSController } from "./WSController";
+import { format } from "path";
 
 export class GUI {
     private running: boolean = false;
@@ -42,8 +43,15 @@ export class GUI {
         let s:string;
         let d:Date=new Date();
         s=days[d.getDay()]+" der "+d.getDate()+". "+months[d.getMonth()]+" "+d.getFullYear();
-        s+=" um "+d.getHours()+":"+d.getMinutes();
+        s+=" um "+d.getHours()+":"+this.format(d.getMinutes());
         $("#datum").text(s);
+    }
+
+    private format(i:number):string {
+        if (i<10) {
+            return "0"+i;
+        }
+        return ""+i;
 
     }
 

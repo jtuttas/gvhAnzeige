@@ -41,8 +41,14 @@ class GUI {
         let s;
         let d = new Date();
         s = days[d.getDay()] + " der " + d.getDate() + ". " + months[d.getMonth()] + " " + d.getFullYear();
-        s += " um " + d.getHours() + ":" + d.getMinutes();
+        s += " um " + d.getHours() + ":" + this.format(d.getMinutes());
         jquery_1.default("#datum").text(s);
+    }
+    format(i) {
+        if (i < 10) {
+            return "0" + i;
+        }
+        return "" + i;
     }
     refresh(dataObj) {
         if (dataObj) {
