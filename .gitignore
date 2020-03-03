@@ -1,5 +1,6 @@
 node_modules/
-./*.js
+GVH.js
+Server.js
 client/*.js
 data/*.js
 *.map
