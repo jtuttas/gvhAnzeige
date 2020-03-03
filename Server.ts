@@ -2,7 +2,7 @@ import express from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
 import { GVH } from './GVH';
-import { Depatures } from './Departure';
+import { Depature } from './data/Departure';
 
 const app = express();
 app.use(express.static('public'));
@@ -12,7 +12,7 @@ const server = http.createServer(app);
 //initialize the WebSocket server instance
 const wss = new WebSocket.Server({ server });
 
-var dep:Depatures[]=new Array();
+var dep:Depature[]=new Array();
 
 wss.on('connection', (ws: WebSocket) => {
 
@@ -49,7 +49,7 @@ function delay(ms: number) {
                     ws.send(JSON.stringify(depatures));
                 })        
                 depatures.forEach(element => {
-                    console.log(element.describe());
+                    console.log(element.toString());
                 });
             }
         );

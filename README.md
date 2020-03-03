@@ -1,10 +1,14 @@
 # GVH Abfahrtzeiten
 ![screenshot](doc/bild.png)
 Die Anwendung zeigt die nächsten 4 Abfahrtzeiten von der gewählte Haltestelle (station) an. Default ist die Haltestelle Messe-Ost. Liegen keiner Echtzeitinformationen vor, so wird die Zeitanzeige in kursiv dargestellt.
-## Installation
+## Installation (Server)
 Zunächst müssen die Abhängigkeiten installiert werden, via
 ```
 npm install
+```
+Dann müssen die Typescript Dateien mit Hilfe des Typescript-Compilers *tsc* übersetzte werden. Dieses geschieht einfach über den Befehl:
+```
+tsc
 ```
 Anschließend kann der Server gestartet werden über..
 ```
@@ -18,6 +22,18 @@ node Server.js [station] [Port]
 ```
 - station: Stationsnummer 
 - port: Portnummer 
+## Installation Client (Webseite)
+Da Browser keiner Module laden können, muss das Tool *bowserify* verwendet werden. Dieses ist zunächst ggf. zu installieren über:
+```
+npm install -g browserify
+
+```
+Anschließend kann das Tool verwendet werden, um die übersetzen TS Datei in einer Datei zu packen. Dieses geschieht wie folgt.
+```
+browserify client/main.js -o public/bundle.js
+
+```
+
 ## Docker Container
 Es existiert auch ein Dockercontainer. Dieser kann wie folgt gestartet werden:
 ```

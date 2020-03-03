@@ -1,10 +1,10 @@
 import request from "request-promise";
-import { Depatures } from "./Departure";
+import { Depature } from "./data/Departure";
 
 export class GVH {
     public static station:string="";
 
-    public static async  getData(station:number): Promise<Depatures[]> {
+    public static async  getData(station:number): Promise<Depature[]> {
         let date: Date = new Date();
         let hh:string=this.format(date.getHours());
         let mm:string=this.format(date.getMinutes());
@@ -23,21 +23,13 @@ export class GVH {
             .then((body) => {
                 console.log("Erzeuge Objekte");
                 GVH.station=body.dm.input.input;
-                let da: Depatures[] = [];
+                let da: Depature[] = [];
                 body.departureList.forEach(element => {
                     
                     if ('dateTime' in element && 'realDateTime' in element) {
-                        let d: Depatures = new Depatures(
-                            element.dateTime.year,
-                            element.dateTime.month,
-                            element.dateTime.day,
-                            element.dateTime.hour,
-                            element.dateTime.minute,
-                            element.realDateTime.year,
-                            element.realDateTime.month,
-                            element.realDateTime.day,
-                            element.realDateTime.hour,
-                            element.realDateTime.minute,
+                        let d: Depature = new Depature(
+                            new Date(element.dateTime.year,element.dateTime.month-1,element.dateTime.day,element.dateTime.hour,element.dateTime.minute),
+                            new Date(element.realDateTime.year,element.realDateTime.month-1,element.realDateTime.day,element.realDateTime.hour,element.realDateTime.minute),
                             element.servingLine.number,
                             element.servingLine.direction,
                             element.servingLine.name,
@@ -46,17 +38,9 @@ export class GVH {
                         da.push(d);
                     }
                     else if('dateTime' in element){
-                        let d: Depatures = new Depatures(
-                            element.dateTime.year,
-                            element.dateTime.month,
-                            element.dateTime.day,
-                            element.dateTime.hour,
-                            element.dateTime.minute,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
+                        let d: Depature = new Depature(
+                            new Date(element.dateTime.year,element.dateTime.month,element.dateTime.day,element.dateTime.hour,element.dateTime.minute),
+                            null, 
                             element.servingLine.number,
                             element.servingLine.direction,
                             element.servingLine.name,
