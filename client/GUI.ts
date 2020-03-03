@@ -1,6 +1,5 @@
 import $ from "jquery";
 import { Depature } from "../data/Departure";
-import { Ticker } from "./Ticker";
 import { WSController } from "./WSController";
 
 export class GUI {
@@ -42,7 +41,7 @@ export class GUI {
         let months:string[]=["Januar","Februar","März","April","Mai","Juni","July","August","September","Oktober","November","Dezember"];
         let s:string;
         let d:Date=new Date();
-        s=days[d.getDay()]+" der "+d.getDate()+". "+months[d.getMonth()-1]+" "+d.getFullYear();
+        s=days[d.getDay()]+" der "+d.getDate()+". "+months[d.getMonth()]+" "+d.getFullYear();
         s+=" um "+d.getHours()+":"+d.getMinutes();
         $("#datum").text(s);
 

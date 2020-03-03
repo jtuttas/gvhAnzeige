@@ -39,7 +39,7 @@ export class GVH {
                     }
                     else if('dateTime' in element){
                         let d: Depature = new Depature(
-                            new Date(element.dateTime.year,element.dateTime.month,element.dateTime.day,element.dateTime.hour,element.dateTime.minute),
+                            new Date(element.dateTime.year,element.dateTime.month-1,element.dateTime.day,element.dateTime.hour,element.dateTime.minute),
                             null, 
                             element.servingLine.number,
                             element.servingLine.direction,
