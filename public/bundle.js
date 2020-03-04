@@ -59,17 +59,27 @@ class GUI {
             this.updateTimer();
             dataObj.forEach((element) => {
                 if (i <= 4) {
-                    let realtime;
-                    let dif;
-                    if (!element.rdepartue) {
-                        realtime = false;
-                        dif = new Date(element.departue).getTime() - d.getTime();
-                    }
-                    else {
+                    console.log("Bearbeite element=" + JSON.stringify(element));
+                    let realtime = false;
+                    let dep = new Date(element.departue);
+                    let rdep = null;
+                    let dif = dep.getTime() - d.getTime();
+                    let delay = 0;
+                    if (element.rdepartue != null) {
                         realtime = true;
-                        dif = new Date(element.rdepartue).getTime() - d.getTime();
+                        rdep = new Date(element.rdepartue);
+                        dif = rdep.getTime() - d.getTime();
+                        delay = rdep.getTime() - dep.getTime();
+                        delay = Math.round(delay / (1000 * 60));
                     }
                     let min = Math.round(dif / (1000 * 60));
+                    //console.log("dep="+dep.getHours()+":"+dep.getMinutes()+" UTC"+dep.toUTCString()+" TimeZoneOffset"+dep.getTimezoneOffset()+" ISO"+dep.toISOString());
+                    if (realtime) {
+                        console.log("*rt) min=" + min + " aktual:" + d.toLocaleTimeString() + " rdep=" + rdep.toLocaleTimeString() + " dif=" + dif);
+                    }
+                    else {
+                        console.log(" min=" + min + " aktual:" + d.toLocaleTimeString() + " dep=" + dep.toLocaleTimeString() + " dif=" + dif);
+                    }
                     if (min > 0) {
                         jquery_1.default("#content").append('<div class="row">');
                         if (element.type == "Bus") {
@@ -78,7 +88,12 @@ class GUI {
                         else {
                             jquery_1.default("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
                         }
-                        jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
+                        if (realtime && delay != 0) {
+                            jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + "  (+" + delay + ' min) </div>');
+                        }
+                        else {
+                            jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
+                        }
                         if (realtime) {
                             jquery_1.default("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute">' + min + ' min</div>');
                         }

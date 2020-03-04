@@ -78,13 +78,15 @@ export class GUI {
                         delay=Math.round(delay/(1000*60));
                     }
                     let min = Math.round(dif / (1000 * 60));
-                    console.log("dep="+dep.getHours()+":"+dep.getMinutes()+" UTC"+dep.toUTCString()+" TimeZoneOffset"+dep.getTimezoneOffset()+" ISO"+dep.toISOString());
+                    //console.log("dep="+dep.getHours()+":"+dep.getMinutes()+" UTC"+dep.toUTCString()+" TimeZoneOffset"+dep.getTimezoneOffset()+" ISO"+dep.toISOString());
+
                     if (realtime) {
                         console.log("*rt) min="+min+" aktual:"+d.toLocaleTimeString()+" rdep="+rdep.toLocaleTimeString()+" dif="+dif);
                     }
                     else {
                         console.log(" min="+min+" aktual:"+d.toLocaleTimeString()+" dep="+dep.toLocaleTimeString()+" dif="+dif);
                     }
+
                     if (min > 0) {
 
                         $("#content").append('<div class="row">');
