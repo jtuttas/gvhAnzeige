@@ -28,6 +28,12 @@ body {
     vertical-align: middle;
 }
 
+#headline {
+    height: 18vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
+}
+
 #station {
     font-size: 4.5vw;
     text-align: center;
