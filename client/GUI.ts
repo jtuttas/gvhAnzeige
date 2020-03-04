@@ -67,14 +67,12 @@ export class GUI {
                     console.log("Bearbeite element="+JSON.stringify(element));
                     let realtime: boolean=false;
                     let dep:Date=new Date(element.departue);
-                    dep=new Date(dep.getTime()+ dep.getTimezoneOffset()*60000);
                     let rdep:Date=null;
                     let dif: number = dep.getTime()-d.getTime();
                     let delay:number =0;
                     if (element.rdepartue!=null) {
                         realtime = true;
                         rdep = new Date(element.rdepartue);
-                        rdep=new Date(rdep.getTime()+ rdep.getTimezoneOffset()*60000);
                         dif = rdep.getTime()-d.getTime();
                         delay=rdep.getTime()-dep.getTime();
                         delay=Math.round(delay/(1000*60));
@@ -97,7 +95,7 @@ export class GUI {
                             $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
                         }
                         if (realtime && delay!=0) {
-                            $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination +"  (+"+delay+'min) </div>');
+                            $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination +"  (+"+delay+' min) </div>');
                         }
                         else {
                             $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
