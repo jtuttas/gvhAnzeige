@@ -6,6 +6,7 @@ export class GVH {
 
     public static async  getData(station:number): Promise<Depature[]> {
         let date: Date = new Date();
+        date = new Date(date.getTime() - date.getTimezoneOffset());
         console.log("Server Date is:"+date.toString());
         let hh:string=this.format(date.getHours());
         let mm:string=this.format(date.getMinutes());
