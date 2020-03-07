@@ -1,6 +1,6 @@
 # GVH Abfahrtzeiten
 ![screenshot](doc/bild.png)
-Die Anwendung zeigt die nächsten 4 Abfahrtzeiten von der gewählte Haltestelle (station) an. Default ist die Haltestelle Messe-Ost. Liegen keiner Echtzeitinformationen vor, so wird die Zeitanzeige in kursiv dargestellt.
+Die Anwendung zeigt die nächsten Abfahrtzeiten von der gewählte Haltestelle (station) an. Default ist die Haltestelle Hannover / Messe-Ost. Liegen keiner Echtzeitinformationen vor, so wird die Zeitanzeige in kursiv dargestellt.
 ## Installation (Server)
 Zunächst müssen die Abhängigkeiten installiert werden, via
 ```
