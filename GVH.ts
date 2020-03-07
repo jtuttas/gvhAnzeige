@@ -11,7 +11,7 @@ export class GVH {
         let mm:string=this.format(date.getMinutes());
         let yyyymmdd:string=date.getFullYear()+this.format(date.getMonth()+1)+this.format(date.getDate());
         let response: any = {};
-        let url:string="https://efa107.efa.de/efaws2/default/XML_DM_REQUEST?outputFormat=JSON&sessionID=0&requestID=0&language=de&useRealtime=1&coordOutputFormat=WGS84[DD.ddddd]&locationServerActive=1&mode=direct&dmLineSelectionAll=1&depType=STOPEVENTS&useAllStops=1&command=null&type_dm=stop&name_dm="+station+"&itdTime="+hh+mm+"&itdDate="+yyyymmdd+"&outputEncoding=UTF-8&inputEncoding=UTF-8&mId=efa_www";
+        let url:string="https://www.efa.de/efaws2/default/XML_DM_REQUEST?outputFormat=JSON&sessionID=0&requestID=0&language=de&useRealtime=1&coordOutputFormat=WGS84[DD.ddddd]&locationServerActive=1&mode=direct&dmLineSelectionAll=1&depType=STOPEVENTS&useAllStops=1&command=null&type_dm=stop&name_dm="+station+"&itdTime="+hh+mm+"&itdDate="+yyyymmdd+"&outputEncoding=UTF-8&inputEncoding=UTF-8&mId=efa_www";
         console.log("URL:"+url);
         await request({
             url: url,

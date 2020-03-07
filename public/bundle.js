@@ -8,8 +8,18 @@ const jquery_1 = __importDefault(require("jquery"));
 class GUI {
     constructor(ws) {
         this.running = false;
+        this.rows = 5;
+        this.filter = null;
         this.start();
         this.ws = ws;
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.has('rows'));
+        if (urlParams.has('rows')) {
+            this.rows = +urlParams.get('rows');
+        }
+        if (urlParams.has('filter')) {
+            this.filter = new RegExp('(' + urlParams.get('filter') + ')');
+        }
     }
     start() {
         this.running = true;
@@ -58,13 +68,14 @@ class GUI {
             jquery_1.default("#station").text(dataObj[0].station);
             this.updateTimer();
             dataObj.forEach((element) => {
-                if (i <= 4) {
+                if (i <= this.rows) {
                     console.log("Bearbeite element=" + JSON.stringify(element));
                     let realtime = false;
                     let dep = new Date(element.departue);
                     let rdep = null;
                     let dif = dep.getTime() - d.getTime();
                     let delay = 0;
+                    let rowString = element.type + " " + element.line + " " + element.destination;
                     if (element.rdepartue != null) {
                         realtime = true;
                         rdep = new Date(element.rdepartue);
@@ -74,34 +85,38 @@ class GUI {
                     }
                     let min = Math.round(dif / (1000 * 60));
                     //console.log("dep="+dep.getHours()+":"+dep.getMinutes()+" UTC"+dep.toUTCString()+" TimeZoneOffset"+dep.getTimezoneOffset()+" ISO"+dep.toISOString());
+                    /*
                     if (realtime) {
-                        console.log("*rt) min=" + min + " aktual:" + d.toLocaleTimeString() + " rdep=" + rdep.toLocaleTimeString() + " dif=" + dif);
+                        console.log("*rt) min="+min+" aktual:"+d.toLocaleTimeString()+" rdep="+rdep.toLocaleTimeString()+" dif="+dif);
                     }
                     else {
-                        console.log(" min=" + min + " aktual:" + d.toLocaleTimeString() + " dep=" + dep.toLocaleTimeString() + " dif=" + dif);
+                        console.log(" min="+min+" aktual:"+d.toLocaleTimeString()+" dep="+dep.toLocaleTimeString()+" dif="+dif);
                     }
+                    */
                     if (min > 0) {
-                        jquery_1.default("#content").append('<div class="row">');
-                        if (element.type == "Bus") {
-                            jquery_1.default("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="bus.png">' + element.type + " " + element.line + '</div>');
+                        if (this.filter == null || this.filter.test(rowString)) {
+                            jquery_1.default("#content").append('<div class="row">');
+                            if (element.type == "Bus") {
+                                jquery_1.default("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="bus.png">' + element.type + " " + element.line + '</div>');
+                            }
+                            else {
+                                jquery_1.default("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
+                            }
+                            if (realtime && delay != 0) {
+                                jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + "  (+" + delay + ' min) </div>');
+                            }
+                            else {
+                                jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
+                            }
+                            if (realtime) {
+                                jquery_1.default("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute">' + min + ' min</div>');
+                            }
+                            else {
+                                jquery_1.default("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute"><i>' + min + ' min</i></div>');
+                            }
+                            jquery_1.default("#content").append('</div>');
+                            i++;
                         }
-                        else {
-                            jquery_1.default("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
-                        }
-                        if (realtime && delay != 0) {
-                            jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + "  (+" + delay + ' min) </div>');
-                        }
-                        else {
-                            jquery_1.default("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
-                        }
-                        if (realtime) {
-                            jquery_1.default("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute">' + min + ' min</div>');
-                        }
-                        else {
-                            jquery_1.default("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute"><i>' + min + ' min</i></div>');
-                        }
-                        jquery_1.default("#content").append('</div>');
-                        i++;
                     }
                 }
             });

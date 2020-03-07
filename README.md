@@ -33,6 +33,11 @@ Anschließend kann das Tool verwendet werden, um die übersetzen TS Datei in ein
 browserify client/main.js -o public/bundle.js
 
 ```
+Der Client kann über zwei Parameter gesteuert werden. 
+- **rows**: Gibt die Anzahl der Zeilen aus, die angezeigt werden.
+- **filter**: Filtert die Ergebnisliste mit Hilfe eines Regulären Ausdrucks.
+
+So zeigt der Aufruf *http://{Server-IP}?rows=4&filter=Bus* die nächsten 4 Busverbindungen der Haltestelle an.
 
 ## Docker Container
 Es existiert auch ein Dockercontainer. Dieser kann wie folgt gestartet werden:

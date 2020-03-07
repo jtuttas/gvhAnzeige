@@ -6,11 +6,23 @@ import { format } from "path";
 export class GUI {
     private running: boolean = false;
     private ws: WSController;
+    private rows:number=5;
+    private filter:RegExp=null;
 
     constructor(ws: WSController) {
         this.start();
         this.ws = ws;
+        var urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.has('rows'));
+        if (urlParams.has('rows')) {
+            this.rows=+urlParams.get('rows');
+        }        
+        if (urlParams.has('filter')) {
+            this.filter= new RegExp('('+urlParams.get('filter')+')');
+        }        
+
     }
+
     public start(): void {
         this.running = true;
         this.timeout();
@@ -63,13 +75,14 @@ export class GUI {
             $("#station").text(dataObj[0].station);
             this.updateTimer();
             dataObj.forEach((element: Depature) => {
-                if (i <= 4) {
+                if (i <= this.rows) {
                     console.log("Bearbeite element="+JSON.stringify(element));
                     let realtime: boolean=false;
                     let dep:Date=new Date(element.departue);
                     let rdep:Date=null;
                     let dif: number = dep.getTime()-d.getTime();
                     let delay:number =0;
+                    let rowString=element.type+" "+element.line+" "+element.destination;
                     if (element.rdepartue!=null) {
                         realtime = true;
                         rdep = new Date(element.rdepartue);
@@ -79,39 +92,41 @@ export class GUI {
                     }
                     let min = Math.round(dif / (1000 * 60));
                     //console.log("dep="+dep.getHours()+":"+dep.getMinutes()+" UTC"+dep.toUTCString()+" TimeZoneOffset"+dep.getTimezoneOffset()+" ISO"+dep.toISOString());
-
+                    /*
                     if (realtime) {
                         console.log("*rt) min="+min+" aktual:"+d.toLocaleTimeString()+" rdep="+rdep.toLocaleTimeString()+" dif="+dif);
                     }
                     else {
                         console.log(" min="+min+" aktual:"+d.toLocaleTimeString()+" dep="+dep.toLocaleTimeString()+" dif="+dif);
                     }
-
+                    */
                     if (min > 0) {
+                        if (this.filter==null || this.filter.test(rowString)) {
 
-                        $("#content").append('<div class="row">');
-                        if (element.type == "Bus") {
-                            $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="bus.png">' + element.type + " " + element.line + '</div>');
-                        }
-                        else {
-                            $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
-                        }
-                        if (realtime && delay!=0) {
-                            $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination +"  (+"+delay+' min) </div>');
-                        }
-                        else {
-                            $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
-                        }
-                        if (realtime) {
-                            $("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute">' + min + ' min</div>');
-                        }
-                        else {
-                            $("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute"><i>' + min + ' min</i></div>');
+                            $("#content").append('<div class="row">');
+                            if (element.type == "Bus") {
+                                $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="bus.png">' + element.type + " " + element.line + '</div>');
+                            }
+                            else {
+                                $("#content").append('<div class="col-xs-4 col-sm-4 col-md-4"><img class="img-responsive myrow myimg" src="ubahn.png">' + element.type + " " + element.line + '</div>');
+                            }
+                            if (realtime && delay!=0) {
+                                $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination +"  (+"+delay+' min) </div>');
+                            }
+                            else {
+                                $("#content").append('<div class="col-xs-6 col-sm-6 col-md-6">' + element.destination + '</div>');
+                            }
+                            if (realtime) {
+                                $("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute">' + min + ' min</div>');
+                            }
+                            else {
+                                $("#content").append('<div class="col-xs-2 col-sm-2 col-md-2 minute"><i>' + min + ' min</i></div>');
 
-                        }
-                        $("#content").append('</div>');
+                            }
+                            $("#content").append('</div>');
 
-                        i++;
+                            i++;
+                        }
                     }
                 }
             });
