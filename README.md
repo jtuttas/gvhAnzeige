@@ -1,8 +1,9 @@
 # GVH Abfahrtzeiten
 ![screenshot](doc/bild.png)
+
 Die Anwendung zeigt die nächsten Abfahrtzeiten von der gewählte Haltestelle (station) an. Default ist die Haltestelle Hannover / Messe-Ost. Liegen keiner Echtzeitinformationen vor, so wird die Zeitanzeige in kursiv dargestellt.
 ## Installation (Server)
-Zunächst müssen die Abhängigkeiten installiert werden, via
+Nach dem Clonen des Repositories müssen zunächst die Abhängigkeiten installiert werden, via
 ```
 npm install
 ```
