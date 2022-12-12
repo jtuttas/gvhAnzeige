@@ -7,7 +7,7 @@
     "@types/request": "^2.48.4",
     "@types/request-promise": "^4.1.45",
     "@types/socket.io": "^2.1.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "form-data": "^3.0.0",
     "jquery": "^3.4.1",
     "request": "^2.88.2",
